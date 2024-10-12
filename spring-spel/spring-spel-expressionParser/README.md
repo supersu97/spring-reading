@@ -245,7 +245,7 @@ protected SpelExpression doParseExpression(String expressionString, @Nullable Pa
 }
 ```
 
-在`org.springframework.expression.spel.standard.InternalSpelExpressionParser#doParseExpression`方法中，首先对给定的表达式字符串进行分词处理，并通过构建抽象语法树（AST）来解析表达式。在解析过程中，它确保 AST 不为空，并且所有的令牌都已经处理。最后，基于解析得到的 AST 创建一个新的 `SpelExpression` 对象，并将其返回。
+在`org.springframework.expression.spel.standard.InternalSpelExpressionParser#doParseExpression`方法中，负责从SpEL表达式字符串生成AST，首先对给定的表达式字符串进行分词处理，并通过构建抽象语法树（AST）来解析表达式。在解析过程中，它确保 AST 不为空，并且所有的令牌都已经处理。最后，基于解析得到的 AST 创建一个新的 `SpelExpression` 对象，并将其返回。
 
 ```java
 @Override
@@ -258,6 +258,7 @@ protected SpelExpression doParseExpression(String expressionString, @Nullable Pa
 
         // 对表达式字符串进行分词处理
         Tokenizer tokenizer = new Tokenizer(expressionString);
+        //生成令牌列表
         this.tokenStream = tokenizer.process();
         this.tokenStreamLength = this.tokenStream.size();
         this.tokenStreamPointer = 0;

@@ -33,7 +33,7 @@ public class ListableBeanFactoryDemo {
         System.out.println("获取工厂中所有Bean定义名称: " + String.join(", ", beanDefinitionNames));
 
         // 获取 ObjectProvider，并懒加载获取 bean 实例
-        ObjectProvider<MyService> objectProvider = beanFactory.getBeanProvider(MyService.class, true);
+        ObjectProvider<MyService> objectProvider = beanFactory.getBeanProvider(MyService.class);
         System.out.println("获取Bean的ObjectProvider: " + objectProvider.getObject());
 
         // 根据类型获取所有 bean 的名称

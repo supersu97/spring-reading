@@ -231,6 +231,15 @@ protected void registerBeanDefinition(String beanName, Map<?, ?> map, String pre
 			throws BeansException {
 
     // ... [代码部分省略以简化]
+    //省略部分用来判断当前前缀的配置，是否带有class，parent，isAbstract，scope等类的定义信息
+
+    // Just use default parent if we're not dealing with the parent itself,
+    // and if there's no class name specified. The latter has to happen for
+    // backwards compatibility reasons.
+    //如果没有配置class和parent，那么就代表不是个bean定义的配置，只是普通的属性值，会用默认的String注册进bean定义中，不会被注册为bean，但是@value会从bean定义中获取属性值
+    if (parent == null && className == null && !beanName.equals(this.defaultParentBean)) {
+        parent = this.defaultParentBean;
+    }
 
     try {
         AbstractBeanDefinition bd = BeanDefinitionReaderUtils.createBeanDefinition(

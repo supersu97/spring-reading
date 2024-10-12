@@ -17,9 +17,14 @@ public class CharacterToNumberFactoryDemo {
 
         // 使用转换服务将字符串 "8" 转换为 Integer 类型
         // 这里演示了如何将字符串转换为对应的整数
-        Integer num = conversionService.convert("8", Integer.class);
-
-        // 输出转换结果
-        System.out.println("String to Integer: " + num);
+        if (conversionService.canConvert(String.class,Integer.class)) {
+            //1.先去缓存中寻找有没有类型对应的转换器
+            //2.如果没有，那么将查找所有父类的转换器，直到查询到后将新的类型组放入缓存
+            //3.然后用对应的转换器进行转换
+            //注册的是<String,Number>类型组放进缓存，第一次进去的时候，是找不到的，然后通过Integer父类找寻到<String,Number>的转换器，将<String,Integer>类型组放入缓存，指向当前查到的转换器
+            Integer num = conversionService.convert("8", Integer.class);
+            // 输出转换结果
+            System.out.println("String to Integer: " + num);
+        }
     }
 }
